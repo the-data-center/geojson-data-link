@@ -1,10 +1,6 @@
 # GEOID Matcher
 A NodeJS library to link properties on two different GeoJSON files by determining if a geographic point is within a larger geographic region and linking the metadata.
 
-## Non-Profit Sponsor
-This project is sponsored by an important non-profit, [The Data Center of Southeast Louisiana](https://www.datacenterresearch.org). The Data Center produces high-quality, independent reports and was incredibly important during the Katrina recovery. Today, they produce information on everything from life-expectancy to coastal erosion to youth programs. These sorts of non-profits don't always get media coverage so if you find this library useful, please consider donating to an important, local, data-driven organization:
-https://www.datacenterresearch.org/support-us/ 
-
 ## Real World Example
 You may have a geojson file with the name, hours, and lat/long coordinates of libraries in your state. You may also have another geojson file with your state's census tracts that has polygons and GEOID data in the properties. This library would be able to find the census tract of each library (based on latitude/longitude) copy various properties from your census tract GeoJSON).
 ## Installation

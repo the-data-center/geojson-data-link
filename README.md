@@ -10,34 +10,7 @@ or
 
 ## Usage
 
-#### In a Node Script
-
-```
-const match = require('./matchGEOID').matchGEOID;
-const polyfile = '~/geography/census-track.geojson';
-const coordinatesfile = '~/geography/library-locations.geojson';
-
-match({
-  polyfile: polyfile,
-  coordinatesfile: coordinatesfile,
-  fields: ["GEOID","STATEFP","COUNTYFP","TRACTCE"],
-  sync: false
-}, function(err, asyncCoordsFile) {
-  if (err) console.error(err);
-  else console.log(JSON.stringify(asyncCoordsFile));
-});
-
-```
-Your options are:
-
-- `polyfile`: the geojson file with your polygon features (i.e., regions to check)
-- `coordinatesfile`: the geojson file with your point/coordinate features
-- `fields`: an array of fields to copy over after linking
-- `sync`: whether the command to get the files runs asynchronously or synchronously.
-
-If you set `sync: true`, be warned that it will block up your program while it fetches the files. So, don't use it as part of a bigger application. It is faster for one-off scripts, though, so if your .
-
-#### Command Line
+#### Command Line Interface
 The command line version accepts as arguments the two geojson files and the fields you want to merge. It returns your new, merged file to stdout. (If you don't work with the CLI often, you can append `> filename.geojson` to the command to save the output to a file instead of display it in the terminal.)
 
 The long example might be:
@@ -62,3 +35,30 @@ Options:
   -f, --fields           Comma separated fields to match (default: GEOID)
   -h, --help             Show help                                     [boolean]
 ```
+
+#### As a Library
+
+```
+const match = require('./matchGEOID').matchGEOID;
+const polyfile = '~/geography/census-track.geojson';
+const coordinatesfile = '~/geography/library-locations.geojson';
+
+match({
+  polyfile: polyfile,
+  coordinatesfile: coordinatesfile,
+  fields: ["GEOID","STATEFP","COUNTYFP","TRACTCE"],
+  sync: false
+}, function(err, asyncCoordsFile) {
+  if (err) console.error(err);
+  else console.log(JSON.stringify(asyncCoordsFile));
+});
+
+```
+Your options are:
+
+- `polyfile`: the geojson file with your polygon features (i.e., regions to check)
+- `coordinatesfile`: the geojson file with your point/coordinate features
+- `fields`: an array of fields to copy over after linking
+- `sync`: whether the command to get the files runs asynchronously or synchronously.
+
+If you set `sync: true`, be warned that it will block I/O while it fetches the (potentially large) files. It's faster for one-off scripts but is not recommended for larger projects. 

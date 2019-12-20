@@ -1,11 +1,11 @@
-# GEOID Matcher
+# GeoJSON Data Link
 A NodeJS library to link properties on two different GeoJSON files by determining if a geographic point is within a larger geographic region and linking the metadata.
 
-`npm install geoid-matcher`
+`npm install geojson-data-link`
 
 or
 
-`yarn install geoid-matcher`
+`yarn install geojson-data-link`
 
 ## Usage
 

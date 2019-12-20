@@ -12,7 +12,7 @@ or
 `yarn install geojson-data-link`
 
 ## About The Data Center
-The (https://www.datacenterresearch.org)[Data Center of Southeast Louisiana] is a fully independent, data-focused non-profit with a mission to build prosperous, inclusive, and sustainable communities by making informed decisions possible. 
+The [Data Center of Southeast Louisiana]((https://www.datacenterresearch.org) is a fully independent, data-focused non-profit with a mission to build prosperous, inclusive, and sustainable communities by making informed decisions possible. If you find this tool useful, please visit [our web site to learn more]((https://www.datacenterresearch.org) about our work and consider [supporting us](https://www.datacenterresearch.org/support-us) in our mission.
 
 ## Usage
 

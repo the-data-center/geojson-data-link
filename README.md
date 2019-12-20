@@ -1,6 +1,7 @@
 # GeoJSON Data Link
 A NodeJS library to link properties on two different GeoJSON files by determining if a geographic point is within a larger geographic region and linking the metadata.
 
+## Installation
 `npm install geojson-data-link`
 
 or

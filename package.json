@@ -13,7 +13,7 @@
     "geoid"
   ],
   "author": "Cody Brumfield",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/the-data-center/geojson-data-link/issues"
   },

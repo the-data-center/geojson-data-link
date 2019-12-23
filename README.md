@@ -1,9 +1,7 @@
 # GeoJSON Data Link
-A NodeJS library to link properties on two different GeoJSON files by determining if a geographic point is within a larger geographic region and linking the metadata.
+A NodeJS library to link properties on two different GeoJSON files by determining if a geographic point is within a larger geographic region and linking the metadata. This project is sponsored by [The Data Center of Southeast Louisiana](https://www.datacenterresearch.org)
 
 ## Installation
-
-It's not on NPM just yet but here's how it will work shortly:
 
 `npm install geojson-data-link`
 
@@ -12,7 +10,7 @@ or
 `yarn install geojson-data-link`
 
 ## About The Data Center
-The [Data Center of Southeast Louisiana](https://www.datacenterresearch.org) is a fully independent, data-focused non-profit with a mission to build prosperous, inclusive, and sustainable communities by making informed decisions possible. If you find this tool useful, please visit [our web site to learn more](https://www.datacenterresearch.org) about our work and consider [supporting us](https://www.datacenterresearch.org/support-us) in our mission.
+[The Data Center of Southeast Louisiana](https://www.datacenterresearch.org) is a fully independent, data-focused non-profit with a mission to build prosperous, inclusive, and sustainable communities by making informed decisions possible. If you find this tool useful, please visit [our web site to learn more](https://www.datacenterresearch.org) about our work and consider [supporting us](https://www.datacenterresearch.org/support-us) in our mission.
 
 ## Usage
 

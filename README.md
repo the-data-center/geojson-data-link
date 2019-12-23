@@ -12,7 +12,7 @@ or
 `yarn install geojson-data-link`
 
 ## About The Data Center
-The [Data Center of Southeast Louisiana]((https://www.datacenterresearch.org) is a fully independent, data-focused non-profit with a mission to build prosperous, inclusive, and sustainable communities by making informed decisions possible. If you find this tool useful, please visit [our web site to learn more]((https://www.datacenterresearch.org) about our work and consider [supporting us](https://www.datacenterresearch.org/support-us) in our mission.
+The [Data Center of Southeast Louisiana](https://www.datacenterresearch.org) is a fully independent, data-focused non-profit with a mission to build prosperous, inclusive, and sustainable communities by making informed decisions possible. If you find this tool useful, please visit [our web site to learn more](https://www.datacenterresearch.org) about our work and consider [supporting us](https://www.datacenterresearch.org/support-us) in our mission.
 
 ## Usage
 
@@ -22,13 +22,13 @@ The command line version accepts as arguments the two geojson files and the fiel
 The long example might be:
 
 ```
-node index.js --coordinatesfile ~/geography/nola-library-locations.geojson --polyfile ~/geography/la-census-track.geojson --fields GEOID,STATEFP > ~/geography/libraries-with-new-data.geojson
+npx geojson-data-link --coordinatesfile ~/geography/nola-library-locations.geojson --polyfile ~/geography/la-census-track.geojson --fields GEOID,STATEFP > ~/geography/libraries-with-new-data.geojson
 ```
 
 This is equivalent to:
 
 ```
-node index.js -c ~/geography/nola-library-locations.geojson -p ~/geography/la-census-track.geojson -f GEOID,STATEFP > ~/geography/libraries-with-new-data.geojson
+npx geojson-data-link -c ~/geography/nola-library-locations.geojson -p ~/geography/la-census-track.geojson -f GEOID,STATEFP > ~/geography/libraries-with-new-data.geojson
 ```
 
 Here's the options:
@@ -67,4 +67,4 @@ Your options are:
 - `fields`: an array of fields to copy over after linking
 - `sync`: whether the command to get the files runs asynchronously or synchronously.
 
-If you set `sync: true`, be warned that it will block I/O while it fetches the (potentially large) files. It's faster for one-off scripts but is not recommended for larger projects. 
+If you set `sync: true`, be warned that it will block I/O while it fetches the (potentially large) files. It's faster for one-off scripts but is not recommended for larger projects.

@@ -4,7 +4,7 @@ const turfBooleanPointInPolygon = require('@turf/boolean-point-in-polygon').defa
 const turfCentroid = require('@turf/centroid').default;
 const resolve = require('path').resolve;
 
-//synchronous version (find on CMD)
+//synchronous version (default on CLI)
 function matchGEOIDSync(options, callback) {
   var polyfile = resolve(options.polyfile);
   var pointfile = resolve(options.coordinatesfile);
@@ -64,7 +64,7 @@ function matchGEOIDSync(options, callback) {
   }
 }
 
-//async version for not blocking io
+//async version for not blocking io (default when used as a library)
 function matchGEOIDAsync(options, callback) {
   var polyfile = resolve(options.polyfile);
   var pointfile = resolve(options.coordinatesfile);

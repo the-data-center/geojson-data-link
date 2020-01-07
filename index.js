@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const resolve = require('path').resolve;
 const base = require('./matchGEOID');
 const argv = require('yargs')

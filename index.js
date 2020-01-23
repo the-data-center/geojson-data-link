@@ -2,7 +2,16 @@
 
 const resolve = require('path').resolve;
 const base = require('./matchGEOID');
-const argv = require('yargs').usage('Add GEOID to GeoJSON point file').example('$0 --polyfile ./myPolyFile.geojson --coordinatesfile ./myPointFile.goejson --fields GEOID,STATEFP', 'Finds which polygon all the points in a geojson file are inside of and then adds the GEOID and STATEFP properties from the polygon to the properties of any point falling within the polygon').alias('p', 'polyfile').describe('p', 'GeoJSON file with Polygons and GEOID in the properties').alias('c', 'coordinatesfile').describe('c', 'GeoJSON with coordinates/points to be given correct GEOID. (If it has polygons, the centroid will be used)').alias('o', 'output').describe('o', 'output format; options include geojson (default), csv, and json').alias('f', 'fields').describe('f', 'Comma separated fields to match (default: GEOID)').help('h').alias('h', 'help').showHelpOnFail(true).argv;
+const argv = require('yargs')
+argv.usage('Link fields between a GeoJSON point file and a GeoJSON polygon file')
+.example('$0 --polyfile ./myPolyFile.geojson --coordinatesfile ./myPointFile.goejson --fields GEOID,STATEFP', 'Finds which polygon all the points in a geojson file are inside of and then adds the GEOID and STATEFP properties from the polygon to the properties of any point falling within the polygon')
+.alias('p', 'polyfile').describe('p', 'GeoJSON file with Polygons and GEOID in the properties')
+.alias('c', 'coordinatesfile').describe('c', 'GeoJSON with coordinates/points to be given correct GEOID. (If it has polygons, the centroid will be used)')
+.alias('o', 'output')
+.describe('o', 'output format; options include geojson (default), csv, and json')
+.alias('f', 'fields').describe('f', 'Comma separated fields to match (default: GEOID)')
+.help('h').alias('h', 'help').showHelpOnFail(true).argv;
+
 if (require.main == module) {
   //command line
   if (argv.p && argv.c) {
@@ -46,7 +55,6 @@ if (require.main == module) {
           }
           rows.push(row.properties)
         })
-
         console.log(JSON.stringify(rows, undefined, 2));
       }
     })

@@ -62,7 +62,20 @@ function matchGEOIDSync(options, callback) {
   } else {
     if (require.main == module) {
       //stdout
-      console.log(JSON.stringify(pointGeoJSON));
+      var output = options.output || "geojson";
+			if (output == "geojson") console.log(JSON.stringify(pointGeoJSON));
+      else if (output == "csv") {
+        var rows = [];
+        var data = pointGeoJSON.features;
+        data.forEach(function(row) {
+          if (row.geometry && row.geometry.type == "Point" && row.geometry.coordinates && row.geometry.coordinates.length > 1) {
+            row.properties.lng = row.geometry.coordinates[0]
+            row.properties.lat = row.geometry.coordinates[1]
+          }
+          rows.push(row.properties)
+        })
+        console.log(JSON.stringify(data));
+      }
     } else {
       //return
       return pointGeoJSON;

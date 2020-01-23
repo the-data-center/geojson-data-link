@@ -36,6 +36,8 @@ Options:
   -p, --polyfile         GeoJSON file with Polygons and GEOID in the properties
   -c, --coordinatesfile  GeoJSON with coordinates/points to be given correct
                          GEOID. (If it has polygons, the centroid will be used)
+  -o, --output           output format; options include geojson (default), csv,
+                         and json
   -f, --fields           Comma separated fields to match (default: GEOID)
   -h, --help             Show help                                     [boolean]
 ```

@@ -1,84 +1,63 @@
 const fs = require('fs');
-const turf = require('@turf/helpers');
 const turfBooleanPointInPolygon = require('@turf/boolean-point-in-polygon').default;
-const turfCentroid = require('@turf/centroid').default;
 const resolve = require('path').resolve;
 
+
+const doMatch = function(options, pointGeoJSON, polyGeoJSON) {
+  var fields = options.fields || ["GEOID"];
+  var points = pointGeoJSON.features;
+  var polies = polyGeoJSON.features;
+  points.forEach(function(point) {
+    polies.forEach(function(poly) {
+      let isIn = turfBooleanPointInPolygon(point, poly);
+      if (isIn) {
+        if (typeof fields === "string") {
+          fields = [fields];
+        }
+        fields.forEach(function(fname) {
+          if (options.reverse) {
+            if (poly.properties[fname]) {
+              poly.properties[fname] += ',' + point.properties[fname];
+            } else {
+              poly.properties[fname] = point.properties[fname];
+            }
+          } else {
+            if (point.properties[fname]) {
+              point.properties[fname] += ',' + poly.properties[fname];
+            } else {
+              point.properties[fname] = poly.properties[fname];
+            }
+          }
+        })
+      }
+
+    })
+  })
+  return options.reverse?polyGeoJSON:pointGeoJSON;
+}
 //synchronous version (default on CLI)
 function matchGEOIDSync(options, callback) {
   var polyfile = resolve(options.polyfile);
   var pointfile = resolve(options.coordinatesfile);
-  var fields = options.fields || ["GEOID"];
+
   var polyGeoJSON = JSON.parse(fs.readFileSync(polyfile, {
     encoding: 'utf-8'
   }))
   var pointGeoJSON = JSON.parse(fs.readFileSync(pointfile, {
     encoding: 'utf-8'
   }));
-  var err = [];
-  var points = pointGeoJSON.features;
-  var polies = polyGeoJSON.features;
-  points.forEach(function(point) {
-    polies.forEach(function(poly) {
-      var pt;
-      if (point.geometry && point.geometry.coordinates) {
-        if (point.geometry.coordinates.length != 2) {
-          var ptpol = turf.polygon(point.geometry.coordinates);
-          pt = turfCentroid(ptpol);
-        } else {
-          pt = turf.point(point.geometry.coordinates);
-        }
 
-        if (poly.geometry.coordinates[0].length >= 4) {
-          var pol = turf.polygon(poly.geometry.coordinates);
-          var isIn = false;
-          try {
-            isIn = turfBooleanPointInPolygon(pt, pol);
-            if (isIn) {
-              if (typeof fields === "string") {
-                fields = [fields];
-              }
-              fields.forEach(function(fname) {
-                point.properties[fname] = poly.properties[fname];
-              })
-            }
-          } catch (e) {
-            err.push({
-              error: e,
-              feature: point.properties
-            })
-            if (typeof callback !== "function") {
-              console.warn('Could not match: ', (point.properties.name || point.properties.Name || point.properties.NAME || point.properties));
-            }
-          }
-        }
-      } else {
-        console.warn('Could not match: ', (point.properties.name || point.properties.Name || point.properties.NAME || point.properties));
-      }
-    })
-  })
+  var newFile = doMatch(options,pointGeoJSON,polyGeoJSON);
+
   if (typeof callback === "function") {
-    callback(err, pointGeoJSON);
+    callback(null, newFile);
   } else {
     if (require.main == module) {
       //stdout
-      var output = options.output || "geojson";
-			if (output == "geojson") console.log(JSON.stringify(pointGeoJSON));
-      else if (output == "csv") {
-        var rows = [];
-        var data = pointGeoJSON.features;
-        data.forEach(function(row) {
-          if (row.geometry && row.geometry.type == "Point" && row.geometry.coordinates && row.geometry.coordinates.length > 1) {
-            row.properties.lng = row.geometry.coordinates[0]
-            row.properties.lat = row.geometry.coordinates[1]
-          }
-          rows.push(row.properties)
-        })
-        console.log(JSON.stringify(data));
-      }
+      console.log(JSON.stringify(newFile))
     } else {
       //return
-      return pointGeoJSON;
+      return newFile;
     }
   }
 }
@@ -87,7 +66,6 @@ function matchGEOIDSync(options, callback) {
 function matchGEOIDAsync(options, callback) {
   var polyfile = resolve(options.polyfile);
   var pointfile = resolve(options.coordinatesfile);
-  var fields = options.fields || ["GEOID"];
   fs.readFile(polyfile, {
     encoding: 'utf-8'
   }, function(err, file) {
@@ -96,51 +74,10 @@ function matchGEOIDAsync(options, callback) {
       encoding: 'utf-8'
     }, function(err, file) {
       var pointGeoJSON = JSON.parse(file)
-      err = [];
-      var points = pointGeoJSON.features;
-      var polies = polyGeoJSON.features;
-      points.forEach(function(point) {
-        polies.forEach(function(poly) {
-          var pt;
-          if (point.geometry && point.geometry.coordinates) {
-            if (point.geometry.coordinates.length != 2) {
-              var ptpol = turf.polygon(point.geometry.coordinates);
-              pt = turfCentroid(ptpol);
-            } else {
-              pt = turf.point(point.geometry.coordinates);
-            }
-
-            if (poly.geometry.coordinates[0].length >= 4) {
-              var pol = turf.polygon(poly.geometry.coordinates);
-              var isIn = false;
-              try {
-                isIn = turfBooleanPointInPolygon(pt, pol);
-                if (isIn) {
-                  if (typeof fields === "string") {
-                    fields = [fields];
-                  }
-                  fields.forEach(function(fname) {
-                    point.properties[fname] = poly.properties[fname];
-                  })
-                }
-              } catch (e) {
-                err.push({
-                  error: e,
-                  feature: point.properties
-                })
-                if (typeof callback !== "function") {
-                  console.warn('Could not match: ', (point.properties.name || point.properties.Name || point.properties.NAME || point.properties));
-                }
-              }
-            }
-          } else {
-            console.warn('Could not match: ', (point.properties.name || point.properties.Name || point.properties.NAME || point.properties));
-          }
-        })
-      })
+      var newFile = doMatch(options,pointGeoJSON,polyGeoJSON);
       if (!err.length) err = null;
       if (typeof callback === "undefined") {
-        callback(err, pointGeoJSON);
+        callback(err, newFile);
       }
     })
   })

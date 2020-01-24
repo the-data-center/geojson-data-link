@@ -15,31 +15,38 @@ or
 ## Usage
 
 #### Command Line Interface
-The command line version accepts as arguments the two geojson files and the fields you want to merge. It returns your new, merged file to stdout. (If you don't work with the CLI often, you can append `> filename.geojson` to the command to save the output to a file instead of display it in the terminal.)
+The command line version accepts as arguments the two geojson files, the fields you want to merge, and some formatting options. It returns your new, merged file to stdout. (If you don't work with the CLI often, you can append `> filename.geojson` to the command to save the output to a file instead of display it in the terminal.)
 
 The long example might be:
 
 ```
-npx geojson-data-link --coordinatesfile ~/geography/nola-library-locations.geojson --polyfile ~/geography/la-census-track.geojson --fields GEOID,STATEFP > ~/geography/libraries-with-new-data.geojson
+npx geojson-data-link --coordinatesfile ~/geography/library-locations.geojson --polyfile ~/geography/census-tracts.geojson --fields GEOID STATEFP > ~/geography/libraries-with-new-data.geojson
 ```
 
 This is equivalent to:
 
 ```
-npx geojson-data-link -c ~/geography/nola-library-locations.geojson -p ~/geography/la-census-track.geojson -f GEOID,STATEFP > ~/geography/libraries-with-new-data.geojson
+npx geojson-data-link -c ~/geography/library-locations.geojson -p ~/geography/census-tracts.geojson -f GEOID STATEFP > ~/geography/libraries-with-new-data.geojson
 ```
 
 Here's the options:
 ```
+Link fields between a GeoJSON point file and a GeoJSON polygon file
+
 Options:
-  --version              Show version number                           [boolean]
-  -p, --polyfile         GeoJSON file with Polygons and GEOID in the properties
-  -c, --coordinatesfile  GeoJSON with coordinates/points to be given correct
-                         GEOID. (If it has polygons, the centroid will be used)
-  -o, --output           output format; options include geojson (default), csv,
-                         and json
-  -f, --fields           Comma separated fields to match (default: GEOID)
-  -h, --help             Show help                                     [boolean]
+  -p, --polyfile         GeoJSON file with Polygons and GEOID in the properties                                                                                                                          [required]
+  -c, --coordinatesfile  GeoJSON with coordinates/points to be given correct GEOID. (If it has polygons, the centroid will be used)                                                                      [required]
+  -o, --output           output format; options include geojson (default), csv, and json
+  -r, --reverse          Copy the data from the point data to the polygon data instead                                                                                                                    [boolean]
+  -b, --beautify         Beautify the output                                                                                                                                                              [boolean]
+  -f, --fields           Fields to match, separated by a space (default: GEOID)                                                                                                                  [array] [required]
+  --version, -v          Show version number                                                                                                                                                              [boolean]
+  -h, --help             Show help                                                                                                                                                                        [boolean]
+
+Examples:
+  index.js -c ./myPointFile.geojson -p ./myPolyFile.geojson -f GEOID STATEFP
+
+  index.js --polyfile ./myPolyFile.geojson --coordinatesfile ./myPointFile.goejson --fields GEOID STATEFP --beautify --reverse
 ```
 
 #### As a Library
@@ -53,7 +60,8 @@ match({
   polyfile: polyfile,
   coordinatesfile: coordinatesfile,
   fields: ["GEOID","STATEFP","COUNTYFP","TRACTCE"],
-  sync: false
+  sync: false,
+  reverse: false
 }, function(err, asyncCoordsFile) {
   if (err) console.error(err);
   else console.log(JSON.stringify(asyncCoordsFile));

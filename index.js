@@ -6,9 +6,9 @@ const yargs = require('yargs');
 const version = require('./package.json').version;
 
 const argv = yargs.usage('Link fields between a GeoJSON point file and a GeoJSON polygon file')
-.example('$0 -c ./myPointFile.goejson -p ./myPolyFile.geojson -f GEOID STATEFP')
+.example('$0 -c ./myPointFile.geojson -p ./myPolyFile.geojson -f GEOID STATEFP')
 .example('')
-.example('$0 --polyfile ./myPolyFile.geojson --coordinatesfile ./myPointFile.goejson --fields GEOID STATEFP', 'Finds which polygon all the points in a geojson file are inside of and then adds the GEOID and STATEFP properties from the polygon to the properties of any point falling within the polygon')
+.example('$0 --polyfile ./myPolyFile.geojson --coordinatesfile ./myPointFile.goejson --fields GEOID STATEFP --beautify --reverse')
 .alias('p', 'polyfile').describe('p', 'GeoJSON file with Polygons and GEOID in the properties')
 .alias('c', 'coordinatesfile').describe('c', 'GeoJSON with coordinates/points to be given correct GEOID. (If it has polygons, the centroid will be used)')
 .alias('o', 'output').describe('o', 'output format; options include geojson (default), csv, and json')

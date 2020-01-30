@@ -34,14 +34,14 @@ Here's the options:
 Link fields between a GeoJSON point file and a GeoJSON polygon file
 
 Options:
-  -p, --polyfile         GeoJSON file with Polygons and GEOID in the properties                                                                                                                          [required]
-  -c, --coordinatesfile  GeoJSON with coordinates/points to be given correct GEOID. (If it has polygons, the centroid will be used)                                                                      [required]
-  -o, --output           output format; options include geojson (default), csv, and json
-  -r, --reverse          Copy the data from the point data to the polygon data instead                                                                                                                    [boolean]
-  -b, --beautify         Beautify the output                                                                                                                                                              [boolean]
-  -f, --fields           Fields to match, separated by a space (default: GEOID)                                                                                                                  [array] [required]
-  --version, -v          Show version number                                                                                                                                                              [boolean]
-  -h, --help             Show help                                                                                                                                                                        [boolean]
+  -p, --polyfile         GeoJSON file with Polygons [required]
+  -c, --coordinatesfile  GeoJSON file with either Points or Polygons. (If matching has polygons, intersect will be used) [required]
+  -o, --output           Output format; options include geojson (default) or just the metadata in csv or json format
+  -r, --reverse          Copy the data from the coordinates file data to the polygon file instead [boolean]
+  -b, --beautify         Beautify the output [boolean]
+  -f, --fields           Fields to match, separated by a space [array] [required]
+  --version, -v          Show version number [boolean]
+  -h, --help             Show help [boolean]
 
 Examples:
   index.js -c ./myPointFile.geojson -p ./myPolyFile.geojson -f GEOID STATEFP

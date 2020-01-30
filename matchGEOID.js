@@ -1,5 +1,6 @@
 const fs = require('fs');
 const turfBooleanPointInPolygon = require('@turf/boolean-point-in-polygon').default;
+const turfIntersect = require('@turf/intersect').default;
 const resolve = require('path').resolve;
 
 
@@ -9,7 +10,12 @@ const doMatch = function(options, pointGeoJSON, polyGeoJSON) {
   var polies = polyGeoJSON.features;
   points.forEach(function(point) {
     polies.forEach(function(poly) {
-      let isIn = turfBooleanPointInPolygon(point, poly);
+      let isIn = false;
+      if (point.geometry.type == "Point") {
+        isIn = turfBooleanPointInPolygon(point, poly);
+      } else {
+        isIn = turfIntersect(point,poly);
+      }
       if (isIn) {
         if (typeof fields === "string") {
           fields = [fields];

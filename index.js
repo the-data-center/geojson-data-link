@@ -68,7 +68,6 @@ if (require.main == module) {
         })
         console.log(JSON.stringify(rows, undefined, 2));
       }
-      console.log(argv)
     })
   } else {
     console.error('Incorrect number of arguments. You must provide both filenames. Use -h for help')

@@ -24,12 +24,16 @@ const doMatch = function(options, pointGeoJSON, polyGeoJSON) {
           if (options.reverse) {
             if (poly.properties[fname]) {
               poly.properties[fname] += ',' + point.properties[fname];
+              poly.properties[fname] = [...new Set(poly.properties[fname].split(','))];
+              poly.properties[fname] = poly.properties[fname].join(',')
             } else {
               poly.properties[fname] = point.properties[fname];
             }
           } else {
             if (point.properties[fname]) {
               point.properties[fname] += ',' + poly.properties[fname];
+              point.properties[fname] = [...new Set(point.properties[fname].split(','))];
+              point.properties[fname] = point.properties[fname].join(',')
             } else {
               point.properties[fname] = poly.properties[fname];
             }

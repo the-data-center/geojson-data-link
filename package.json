@@ -1,6 +1,6 @@
 {
   "name": "geojson-data-link",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A tool to match GeoJSON point coordinates (or a polygon centroid) to a polygon and copy over properties",
   "main": "index.js",
   "bin": {

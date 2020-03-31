@@ -43,10 +43,6 @@ Options:
   --version, -v          Show version number [boolean]
   -h, --help             Show help [boolean]
 
-Examples:
-  index.js -c ./myPointFile.geojson -p ./myPolyFile.geojson -f GEOID STATEFP
-
-  index.js --polyfile ./myPolyFile.geojson --coordinatesfile ./myPointFile.goejson --fields GEOID STATEFP --beautify --reverse
 ```
 
 #### As a Library

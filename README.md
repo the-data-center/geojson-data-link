@@ -19,13 +19,13 @@ The command line version accepts as arguments the two geojson files, the fields 
 
 The long example might be:
 
-```
+```bash
 npx geojson-data-link --coordinatesfile ~/geography/library-locations.geojson --polyfile ~/geography/census-tracts.geojson --fields GEOID STATEFP > ~/geography/libraries-with-new-data.geojson
 ```
 
 This is equivalent to:
 
-```
+```bash
 npx geojson-data-link -c ~/geography/library-locations.geojson -p ~/geography/census-tracts.geojson -f GEOID STATEFP > ~/geography/libraries-with-new-data.geojson
 ```
 
@@ -47,7 +47,7 @@ Options:
 
 #### As a Library
 
-```
+```javascript
 const match = require('./matchGEOID').matchGEOID;
 const polyfile = '~/geography/census-track.geojson';
 const coordinatesfile = '~/geography/library-locations.geojson';
